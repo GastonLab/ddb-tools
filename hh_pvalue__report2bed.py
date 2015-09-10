@@ -35,7 +35,8 @@ if __name__ == "__main__":
 
                 cm_size = float(line2_data[2]) - float(line1_data[2])
                 mbp_size = (int(line2_data[1]) - int(line1_data[1])) / 1000000.00
-                outfile.write("%s\t%s\t%s\t%s\t%s\t%s\n" % (line1_data[0], line1_data[1], line2_data[1], mbp_size,
-                                                            cm_size, line1_data[4]))
+                outfile.write("%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n" % (line1_data[0], line1_data[1], line2_data[1],
+                                                                    mbp_size, cm_size, line1_data[4], line1_data[5],
+                                                                    line1_data[6]))
 
     sys.stdout.write("Finished\n")

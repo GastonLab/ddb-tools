@@ -25,9 +25,8 @@ if __name__ == "__main__":
     argcomplete.autocomplete(parser)
     args = parser.parse_args()
 
-    annotations = pybedtools.BedTool(args.annotations)
+    # annotations = pybedtools.BedTool(args.annotations)
 
-    bed_regions = list()
     with open(args.outfile, 'w') as outfile:
         with open(args.infile, 'rU') as infile:
             lines = infile.readlines()
@@ -35,14 +34,17 @@ if __name__ == "__main__":
                 line1_data = line1.split("\t")
                 line2_data = line2.split("\t")
 
+                print line1
+                print line2
+
                 interval_string = "%s %s %s" % (line1_data[0], line1_data[1], line2_data[1])
-                interval = pybedtools.BedTool(interval_string, from_string=True)
-                intersections = annotations.intersect(interval, u=True)
-                num_snps = len(intersections)
+                # interval = pybedtools.BedTool(interval_string, from_string=True)
+                # intersections = annotations.intersect(interval, u=True)
+                # num_snps = len(intersections)
 
                 cm_size = float(line2_data[2]) - float(line1_data[2])
                 mbp_size = (int(line2_data[1]) - int(line1_data[1])) / 1000000.00
-                outfile.write("%s\t%s\t%s\t%s\t%s\t%s\n" %
-                              (line1_data[0], line1_data[1], line2_data[1], mbp_size, cm_size, num_snps))
+                outfile.write("%s\t%s\t%s\t%s\t%s\n" %
+                              (line1_data[0], line1_data[1], line2_data[1], mbp_size, cm_size))
 
     sys.stdout.write("Finished\n")
