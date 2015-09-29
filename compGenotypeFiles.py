@@ -27,9 +27,7 @@ def read_genotypes(infile, genotypes, snp_annotations):
         for row in reader:
             if snp_annotations[row[0]]:
                 # print snp_annotations[row[0]]['chr']
-                if (snp_annotations[row[0]]['chr'] != 'M' and
-                   snp_annotations[row[0]]['chr'] != 'Y' and
-                   snp_annotations[row[0]]['chr'] != 'X'):
+                if snp_annotations[row[0]]['chr'] >= 1 and snp_annotations[row[0]]['chr'] <= 22:
 
                     genotype = row[1].split('|')
                     genotypes[file][row[0]] = genotype[0]
