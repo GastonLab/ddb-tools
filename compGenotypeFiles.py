@@ -22,6 +22,7 @@ def read_genotypes(infile, genotypes, snp_annotations):
     num_homozyous = 0
     num_xym = 0
     missing_snps = defaultdict(int)
+    autosomal_snps = defaultdict(int)
     with open(infile, 'rU') as input:
         reader = csv.reader(input, dialect='excel-tab')
         for row in reader:
