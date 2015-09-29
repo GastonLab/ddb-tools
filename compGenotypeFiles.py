@@ -44,9 +44,9 @@ def read_genotypes(infile, genotypes, snp_annotations):
             num_snps += 1
     percent_homozygous = (float(num_homozyous) / float(num_snps)) * 100
     sys.stdout.write("%s: %s percent homozygous\n" % (infile, percent_homozygous))
-    # sys.stdout.write("There were %s SNPs missing from the annotations file and skipped (%s percent)\n" %
-    sys.stdout.write("Skipped %s snps not on 22 autosomes\n" % num_xym)
+    sys.stdout.write("There were %s SNPs missing from the annotations file and skipped (%s percent)\n" %
                      (len(missing_snps), (len(missing_snps) / float(num_snps))))
+    sys.stdout.write("Skipped %s snps not on 22 autosomes\n" % num_xym)
 
 
 if __name__ == "__main__":
