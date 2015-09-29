@@ -20,6 +20,7 @@ def read_annotation_file(infile):
 def read_genotypes(infile, genotypes, snp_annotations):
     num_snps = 0
     num_homozyous = 0
+    num_xym = 0
     missing_snps = defaultdict(int)
     with open(infile, 'rU') as input:
         reader = csv.reader(input, dialect='excel-tab')
@@ -34,6 +35,8 @@ def read_genotypes(infile, genotypes, snp_annotations):
                     num_snps += 1
                     if genotype[0] == 'AA' or genotype[0] == 'BB':
                         num_homozyous += 1
+                else:
+                    num_xym += 1
             else:
                 if missing_snps[row[0]]:
                     pass
@@ -44,6 +47,7 @@ def read_genotypes(infile, genotypes, snp_annotations):
     percent_homozygous = (float(num_homozyous) / float(num_snps)) * 100
     sys.stdout.write("%s: %s percent homozygous\n" % (infile, percent_homozygous))
     sys.stdout.write("There were %s SNPs missing from the annotations file and skipped (%s percent)\n" %
+    sys.stdout.write("Skipped %s snps on C, Y and M chromosomes\n" % num_xym)
                      (len(missing_snps), (len(missing_snps) / float(num_snps))))
 
 
