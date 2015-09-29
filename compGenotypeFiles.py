@@ -26,6 +26,7 @@ def read_genotypes(infile, genotypes, snp_annotations):
         reader = csv.reader(input, dialect='excel-tab')
         for row in reader:
             if snp_annotations[row[0]]:
+                print snp_annotations[row[0]]['chr']
                 if (snp_annotations[row[0]]['chr'] != 'M' and
                    snp_annotations[row[0]]['chr'] != 'Y' and
                    snp_annotations[row[0]]['chr'] != 'X'):
