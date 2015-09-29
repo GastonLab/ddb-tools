@@ -28,7 +28,7 @@ def convert_genotypes(infile, outfile, snp_annotations):
                     if 1 <= int(snp_annotations[row[0]]['chr']) <= 22:
                         genotype = row[1].split('|')
                         output.write("%s\t%s\t%s\t%s\t%s\n" % (snp_annotations[row[0]]['chr'],
-                                                               snp_annotations[row[0]]['pos'] - 1,
+                                                               int(snp_annotations[row[0]]['pos']) - 1,
                                                                snp_annotations[row[0]]['pos'],
                                                                snp_annotations[row[0]]['loc'],
                                                                genotype))
