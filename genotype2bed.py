@@ -31,7 +31,7 @@ def convert_genotypes(infile, outfile, snp_annotations):
                                                                int(snp_annotations[row[0]]['pos']) - 1,
                                                                snp_annotations[row[0]]['pos'],
                                                                snp_annotations[row[0]]['loc'],
-                                                               genotype))
+                                                               genotype[0]))
 
 
 if __name__ == "__main__":
