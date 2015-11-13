@@ -27,7 +27,7 @@ if __name__ == "__main__":
 
             logfile = "{}.cuffquant.log".format(sample)
             command = "cuffquant -p {cores} -o {dir} -M {mask} -u --library-type fr-firststrand " \
-                      "{reads} {ann}".format(reads=bam_file, ann=annotation, mask=mask, dir=directory,
+                      "{ann} {reads}".format(reads=bam_file, ann=annotation, mask=mask, dir=directory,
                                              cores=multiprocessing.cpu_count())
 
             sys.stdout.write("Executing cuffquant for sample {sample}\n".format(sample=sample))
