@@ -22,8 +22,8 @@ if __name__ == "__main__":
         reader = csv.reader(infile, dialect="excel-tab")
         for row in reader:
             sample = row[0]
-            bam_file = row[1]
-            directory = row[2]
+            directory = "./{}".format(sample)
+            bam_file = "./BAMs/{}.merged.bam".format(sample)
 
             logfile = "{}.cuffquant.log".format(sample)
             command = "cuffquant -p {cores} -o {dir} -M {mask} -u --library-type fr-firststrand " \
