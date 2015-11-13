@@ -21,7 +21,7 @@ if __name__ == "__main__":
     with open(args.infile, 'r') as infile:
         reader = csv.reader(infile, dialect="excel-tab")
         for row in reader:
-            sample = row[0]
+            sample = row[0].strip()
             directory = "./{}".format(sample)
             bam_file = "./BAMs/{}.merged.bam".format(sample)
 
