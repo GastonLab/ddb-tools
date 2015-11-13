@@ -15,7 +15,7 @@ if __name__ == "__main__":
     argcomplete.autocomplete(parser)
     args = parser.parse_args()
 
-    annotation = "/data/shared/Genomes/Homo_sapiens/Annotations/gencode.v19.annotation.mod.nochr.gtf"
+    annotation = "./cuffmerge/merged.gtf"
     mask = "/data/shared/Genomes/Homo_sapiens/Annotations/rRNA.gtf"
 
     with open(args.infile, 'r') as infile:
