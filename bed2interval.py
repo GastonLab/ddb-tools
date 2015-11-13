@@ -14,4 +14,8 @@ if __name__ == "__main__":
     argcomplete.autocomplete(parser)
     args = parser.parse_args()
 
-    
+    intervals = pybedtools.BedTool(args.infile)
+
+    with open(args.outfile, 'w') as output:
+        for interval in intervals:
+            output.write("%s:%s-%s\n" % (interval.chrom, interval.start + 1, interval.end + 1))
