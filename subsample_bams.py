@@ -55,7 +55,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     samples = list()
-    fractions = [0.5, 0.25]
+    fractions = [50, 25]
     instructions = list()
 
     with open(args.infile, 'rb') as infile:
