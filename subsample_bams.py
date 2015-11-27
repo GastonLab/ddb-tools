@@ -20,7 +20,13 @@ def check_return_code(code):
         sys.exit()
 
 
-def subsample_bam(sample, seed, fraction):
+def execute_multiprocess(instructions):
+    code = subsample_bam(instructions[0], instructions[1], instructions[2], instructions[3])
+
+    return code
+
+
+def subsample_bam(sample, seed, fraction, iteration):
     """Use samtools view to subsample an input file to the specified fraction"""
 
     logfile = "subsample-{}-{}-{}.log".format(sample, fraction, iteration)
@@ -34,9 +40,8 @@ def subsample_bam(sample, seed, fraction):
         p = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=err, shell=True)
         process_return = p.communicate()
         code = p.returncode
-        if code:
-            raise RuntimeError("An error occurred when executing the commandline: {}. "
-                               "Please check the logfile {} for details\n".format(command, logfile))
+
+        return code
 
 
 if __name__ == "__main__":
@@ -64,10 +69,10 @@ if __name__ == "__main__":
         for fraction in fractions:
             iteration = 0
             while iteration < int(args.number):
-                instructions.append((sample, int(args.seed), fraction))
+                instructions.append((sample, int(args.seed), fraction, iteration))
                 iteration += 1
 
-    result = pool.map_async(subsample_bam, instructions)
+    result = pool.map_async(execute_multiprocess, instructions)
     codes = result.get()
     pool.close()
     pool.join()
