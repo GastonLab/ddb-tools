@@ -2,6 +2,7 @@
 
 import argparse
 import pybedtools
+from pyfaidx import Fasta
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
@@ -12,6 +13,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     targets = pybedtools.BedTool(args.bed)
+    genome = Fasta(args.reference)
     with open(args.output, 'w') as output:
         for target in targets:
             flank1_start = target.start - 11
@@ -20,11 +22,8 @@ if __name__ == "__main__":
             flank2_start = target.end
             flank2_end = target.end + 11
 
-            flank1 = pybedtools.BedTool("{} {} {}".format(target.chrom, flank1_start, flank1_end), from_string=True)
-            flank2 = pybedtools.BedTool("{} {} {}".format(target.chrom, flank2_start, flank2_end), from_string=True)
-
-            flank1_seq = flank1.sequence(fi=args.reference)
-            flank2_seq = flank1.sequence(fi=args.reference)
+            flank1_seq = genome[target.chrom][flank1_start:flank1_end].seq
+            flank2_seq = genome[target.chrom][flank2_start:flank2_end].seq
 
             target_size = target.end - target.start
 
@@ -33,5 +32,5 @@ if __name__ == "__main__":
                                                                                               chr=target.chrom,
                                                                                               start=target.start,
                                                                                               end=target.end,
-                                                                                              flank1=flank1_seq.seqfn.read(),
-                                                                                              flank2=flank2_seq.seqfn.read()))
+                                                                                              flank1=flank1_seq,
+                                                                                              flank2=flank2_seq))
