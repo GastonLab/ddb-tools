@@ -10,7 +10,7 @@ if __name__ == "__main__":
     parser.add_argument('-o', '--output', help="Output file name", default="fastq_machine_runIDs.txt")
     args = parser.parse_args()
 
-    fastq_files = glob.glob("*_L001_R1_001.fastq.gz")
+    fastq_files = glob.glob("*R1.fastq.gz")
 
     with open(args.output, 'w') as output:
         for fastq in fastq_files:
