@@ -17,7 +17,7 @@ if __name__ == "__main__":
             parts = fastq.split('_L001_R1_001')
             sample = parts[0]
             fastq_file = HTSeq.FastqReader(fastq)
-            read = fastq_file.next()
+            read = iter(fastq_file).next()
             read_name_parts = read.name.split(':')
             sys.stdout.write("{}\t{}\n".format(sample, read_name_parts[0]))
             output.write("{}\t{}\n".format(sample, read_name_parts[0]))
