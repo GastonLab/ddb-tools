@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="401e3a3e-8281-4124-9921-4e863a57fba8" name="Default" comment="" />
+    <list default="true" id="401e3a3e-8281-4124-9921-4e863a57fba8" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fastq_scan_machine.py" afterPath="$PROJECT_DIR$/fastq_scan_machine.py" />
+    </list>
     <ignored path="Tools.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path=".idea/dataSources.local.xml" />
@@ -46,8 +48,8 @@
       <file leaf-file-name="fastq_scan_machine.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/fastq_scan_machine.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.35801104">
-              <caret line="18" column="49" selection-start-line="18" selection-start-column="49" selection-end-line="18" selection-end-column="49" />
+            <state vertical-scroll-proportion="0.41767955">
+              <caret line="21" column="60" selection-start-line="21" selection-start-column="60" selection-end-line="21" selection-end-column="60" />
               <folding>
                 <element signature="e#23#38#0" expanded="true" />
               </folding>
@@ -810,8 +812,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/fastq_scan_machine.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.35801104">
-          <caret line="18" column="49" selection-start-line="18" selection-start-column="49" selection-end-line="18" selection-end-column="49" />
+        <state vertical-scroll-proportion="0.41767955">
+          <caret line="21" column="60" selection-start-line="21" selection-start-column="60" selection-end-line="21" selection-end-column="60" />
           <folding>
             <element signature="e#23#38#0" expanded="true" />
           </folding>
