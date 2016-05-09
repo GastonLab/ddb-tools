@@ -1,4 +1,4 @@
-__author__ = 'dgaston'
+#!/usr/bin/env python
 
 import csv
 import sys
@@ -121,9 +121,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
     args.logLevel = "INFO"
 
-    samples = list()
     fractions = [50, 25]
-    instructions = list()
 
     sys.stdout.write("Parsing configuration data\n")
     config = configuration.configure_runtime(args.configuration)
@@ -152,7 +150,7 @@ if __name__ == "__main__":
             while iteration < int(args.number):
                 job = Job.wrapJobFn(subsample_bam, [args.address], "coveragestore", auth_provider, sample, args.seed,
                                     fraction, iteration,
-                                    cores=1))
+                                    cores=1)
 
                 # Create workflow from created jobs
                 root_job.addChild(job)
