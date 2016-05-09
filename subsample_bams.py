@@ -22,7 +22,7 @@ from coveragestore import AmpliconCoverage
 from coveragestore import SampleCoverage
 
 
-def subsample_bam(job, addresses, keyspace, auth, name, samples, seed, fraction, iteration):
+def subsample_bam(job, addresses, keyspace, auth, name, samples, config, seed, fraction, iteration):
     """Use samtools view to subsample an input file to the specified fraction"""
 
     sublog = "subsample-{}-{}-{}.log".format(name, fraction, iteration)
@@ -145,7 +145,7 @@ if __name__ == "__main__":
             iteration = 0
             while iteration < int(args.number):
                 job = Job.wrapJobFn(subsample_bam, [args.address], "coveragestore", auth_provider, sample, samples,
-                                    args.randseed, fraction, iteration,
+                                    config, args.randseed, fraction, iteration,
                                     cores=1)
 
                 # Create workflow from created jobs
