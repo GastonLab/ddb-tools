@@ -26,9 +26,12 @@ def subsample_bam(job, addresses, keyspace, auth, name, seed, fraction, iteratio
     """Use samtools view to subsample an input file to the specified fraction"""
 
     sublog = "subsample-{}-{}-{}.log".format(name, fraction, iteration)
-    subsampled_bam = "subsample-{}-{}-{}.bam".format(name, fraction, iteration)
-    samcommand = "samtools view -s {seed}.{fraction} -b {input} > {output}".format(seed=seed, fraction=fraction,
-                                                                                   input=sample, output=subsampled_bam)
+    input_bam = "{}.recalibrated.sorted.bam".format(samples[name]['library_name'])
+    subsampled_bam = "subsample-{}-{}-{}.bam".format(samples[name]['library_name'], fraction, iteration)
+    samcommand = "samtools view -s {seed}.{fraction} -b {input} > {output}".format(seed=seed,
+                                                                                   fraction=fraction,
+                                                                                   input=input_bam,
+                                                                                   output=subsampled_bam)
 
     output = "{}.sambamba_coverage.bed".format(subsampled_bam)
     logfile = "{}.sambamba_coverage.log".format(subsampled_bam)
