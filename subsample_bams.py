@@ -33,6 +33,9 @@ def subsample_bam(job, addresses, keyspace, auth, name, samples, config, seed, f
                                                                                    input=input_bam,
                                                                                    output=subsampled_bam)
 
+    index_command = "samtools index {}".format(subsampled_bam)
+    index_log = "{}.index.log".format(subsampled_bam)
+
     output = "{}.sambamba_coverage.bed".format(subsampled_bam)
     logfile = "{}.sambamba_coverage.log".format(subsampled_bam)
 
@@ -50,8 +53,11 @@ def subsample_bam(job, addresses, keyspace, auth, name, samples, config, seed, f
                ">",
                "{}".format(output))
 
-    job.fileStore.logToMaster("Samtools Command: {}\n".format(samcommand))
+    job.fileStore.logToMaster("Samtools ViewCommand: {}\n".format(samcommand))
     pipeline.run_and_log_command(samcommand, sublog)
+
+    job.fileStore.logToMaster("Samtools Index Command: {}\n".format(index_command))
+    pipeline.run_and_log_command(index_command, index_log)
 
     job.fileStore.logToMaster("SamBamba Coverage Command: {}\n".format(command))
     pipeline.run_and_log_command(" ".join(command), logfile)
