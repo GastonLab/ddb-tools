@@ -65,6 +65,8 @@ def subsample_bam(job, addresses, keyspace, auth, name, samples, config, seed, f
     connection.setup(addresses, keyspace, auth_provider=auth)
 
     job.fileStore.logToMaster("Adding coverage data: {}\n".format(samcommand))
+
+    num_libs = (samples[name]['num_libraries_in_run'] * (1 / (fraction / 100)))
     with open(output, 'rb') as coverage:
         reader = csv.reader(coverage, delimiter='\t')
         header = reader.next()
@@ -87,8 +89,8 @@ def subsample_bam(job, addresses, keyspace, auth, name, samples, config, seed, f
 
             sample_data = SampleCoverage.create(sample=samples[name]['sample_name'],
                                                 library_name=samples[name]['library_name'],
-                                                run_id="subsample",
-                                                num_libraries_in_run=samples[name]['num_libraries_in_run'],
+                                                run_id="subsample-{}".format(fraction),
+                                                num_libraries_in_run=num_libs,
                                                 sequencer_id=samples[name]['sequencer'],
                                                 program_name="sambamba",
                                                 extraction=samples[name]['extraction'],
@@ -103,8 +105,8 @@ def subsample_bam(job, addresses, keyspace, auth, name, samples, config, seed, f
             amplicon_data = AmpliconCoverage.create(amplicon=row[3],
                                                     sample=samples[name]['sample_name'],
                                                     library_name=samples[name]['library_name'],
-                                                    run_id="subsample",
-                                                    num_libraries_in_run=samples[name]['num_libraries_in_run'],
+                                                    run_id="subsample-{}".format(fraction),
+                                                    num_libraries_in_run=num_libs,
                                                     sequencer_id=samples[name]['sequencer'],
                                                     program_name="sambamba",
                                                     extraction=samples[name]['extraction'],
@@ -129,7 +131,7 @@ if __name__ == "__main__":
     Job.Runner.addToilOptions(parser)
     args = parser.parse_args()
 
-    fractions = [50, 25]
+    fractions = [50, 33, 25]
 
     sys.stdout.write("Parsing configuration data\n")
     config = configuration.configure_runtime(args.configuration)
