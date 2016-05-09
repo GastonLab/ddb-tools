@@ -65,7 +65,7 @@ def subsample_bam(job, addresses, keyspace, auth, name, samples, config, seed, f
     connection.setup(addresses, keyspace, auth_provider=auth)
 
     job.fileStore.logToMaster("Adding coverage data: {}\n".format(samcommand))
-    with open("{}.sambamba_coverage.bed".format(sample), 'rb') as coverage:
+    with open(output, 'rb') as coverage:
         reader = csv.reader(coverage, delimiter='\t')
         header = reader.next()
         threshold_indices = list()
