@@ -138,12 +138,6 @@ if __name__ == "__main__":
     else:
         auth_provider = None
 
-    with open(args.infile, 'rb') as infile:
-        reader = csv.reader(infile, dialect='excel-tab')
-        reader.next()
-        for row in reader:
-            samples.append(row[0])
-
     for sample in samples:
         for fraction in fractions:
             iteration = 0
