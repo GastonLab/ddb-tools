@@ -121,6 +121,9 @@ if __name__ == "__main__":
     args = parser.parse_args()
     args.logLevel = "INFO"
 
+    print "***"
+    print args
+
     fractions = [50, 25]
 
     sys.stdout.write("Parsing configuration data\n")
@@ -132,11 +135,17 @@ if __name__ == "__main__":
     # Workflow Graph definition. The following workflow definition should create a valid Directed Acyclic Graph (DAG)
     root_job = Job.wrapJobFn(pipeline.spawn_batch_jobs, cores=1)
 
+    print "***"
+    print args
+
     if args.username:
         password = getpass.getpass()
         auth_provider = PlainTextAuthProvider(username=args.username, password=password)
     else:
         auth_provider = None
+
+    print "***"
+    print args
 
     for sample in samples:
         for fraction in fractions:
