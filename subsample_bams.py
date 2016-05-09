@@ -25,7 +25,7 @@ from coveragestore import SampleCoverage
 def subsample_bam(addresses, keyspace, auth, name, seed, fraction, iteration):
     """Use samtools view to subsample an input file to the specified fraction"""
 
-    logfile = "subsample-{}-{}-{}.log".format(name, fraction, iteration)
+    sublog = "subsample-{}-{}-{}.log".format(name, fraction, iteration)
     subsampled_bam = "subsample-{}-{}-{}.bam".format(name, fraction, iteration)
     samcommand = "samtools view -s {seed}.{fraction} -b {input} > {output}".format(seed=seed, fraction=fraction,
                                                                                    input=sample, output=subsampled_bam)
@@ -48,7 +48,7 @@ def subsample_bam(addresses, keyspace, auth, name, seed, fraction, iteration):
                "{}".format(output))
 
     job.fileStore.logToMaster("Samtools Command: {}\n".format(samcommand))
-    pipeline.run_and_log_command(" ".join(samcommand), logfile)
+    pipeline.run_and_log_command(" ".join(samcommand), sublog)
 
     job.fileStore.logToMaster("SamBamba Coverage Command: {}\n".format(command))
     pipeline.run_and_log_command(" ".join(command), logfile)
@@ -113,6 +113,8 @@ if __name__ == "__main__":
     parser.add_argument('-n', '--number', help="Number of iterations per sample to perform", default=1)
     parser.add_argument('-s', '--samples_file', help="Input configuration file for samples")
     parser.add_argument('-c', '--configuration', help="Configuration file for various settings")
+    parser.add_argument('-a', '--address', help="IP Address for Cassandra connection", default='127.0.0.1')
+    parser.add_argument('-u', '--username', help='Cassandra username for login', default=None)
 
     argcomplete.autocomplete(parser)
     Job.Runner.addToilOptions(parser)
