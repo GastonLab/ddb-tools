@@ -25,6 +25,7 @@ from coveragestore import SampleCoverage
 def subsample_bam(job, addresses, keyspace, auth, name, samples, config, seed, fraction, iteration):
     """Use samtools view to subsample an input file to the specified fraction"""
 
+    library_name = "subsample-{}-{}-{}".format(samples[name]['library_name'], fraction, iteration)
     sublog = "subsample-{}-{}-{}.log".format(name, fraction, iteration)
     input_bam = "{}.recalibrated.sorted.bam".format(samples[name]['library_name'])
     subsampled_bam = "subsample-{}-{}-{}.bam".format(samples[name]['library_name'], fraction, iteration)
@@ -88,7 +89,7 @@ def subsample_bam(job, addresses, keyspace, auth, name, samples, config, seed, f
                 index += 1
 
             sample_data = SampleCoverage.create(sample=samples[name]['sample_name'],
-                                                library_name=samples[name]['library_name'],
+                                                library_name=library_name,
                                                 run_id="subsample-{}".format(fraction),
                                                 num_libraries_in_run=num_libs,
                                                 sequencer_id=samples[name]['sequencer'],
@@ -104,7 +105,7 @@ def subsample_bam(job, addresses, keyspace, auth, name, samples, config, seed, f
 
             amplicon_data = AmpliconCoverage.create(amplicon=row[3],
                                                     sample=samples[name]['sample_name'],
-                                                    library_name=samples[name]['library_name'],
+                                                    library_name=library_name,
                                                     run_id="subsample-{}".format(fraction),
                                                     num_libraries_in_run=num_libs,
                                                     sequencer_id=samples[name]['sequencer'],
