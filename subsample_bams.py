@@ -66,7 +66,7 @@ def subsample_bam(job, addresses, keyspace, auth, name, samples, config, seed, f
 
     job.fileStore.logToMaster("Adding coverage data: {}\n".format(samcommand))
 
-    num_libs = (samples[name]['num_libraries_in_run'] * (1 / (fraction / 100)))
+    num_libs = (samples[name]['num_libraries_in_run'] * (1 / (float(fraction) / 100.00)))
     with open(output, 'rb') as coverage:
         reader = csv.reader(coverage, delimiter='\t')
         header = reader.next()
