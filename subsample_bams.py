@@ -85,7 +85,7 @@ def subsample_bam(job, addresses, keyspace, auth, name, samples, config, seed, f
                 threshold_data[threshold] = row[threshold_indices[index]]
                 index += 1
 
-            sample_data = SampleCoverage.create(sample=sample,
+            sample_data = SampleCoverage.create(sample=samples[sample]['sample_name'],
                                                 library_name=samples[sample]['library_name'],
                                                 run_id="subsample",
                                                 num_libraries_in_run=samples[sample]['num_libraries_in_run'],
@@ -101,7 +101,7 @@ def subsample_bam(job, addresses, keyspace, auth, name, samples, config, seed, f
                                                 perc_bp_cov_at_thresholds=threshold_data)
 
             amplicon_data = AmpliconCoverage.create(amplicon=row[3],
-                                                    sample=sample,
+                                                    sample=samples[sample]['sample_name'],
                                                     library_name=samples[sample]['library_name'],
                                                     run_id="subsample",
                                                     num_libraries_in_run=samples[sample]['num_libraries_in_run'],
