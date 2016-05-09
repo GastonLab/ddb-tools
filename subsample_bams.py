@@ -150,8 +150,7 @@ if __name__ == "__main__":
             while iteration < int(args.number):
                 job = Job.wrapJobFn(subsample_bam, [args.address], "coveragestore", auth_provider, sample, args.seed,
                                     fraction, iteration,
-                                    cores=int(config['vcfanno']['num_cores']),
-                                    memory="{}G".format(config['vcfanno']['max_mem']))
+                                    cores=1))
 
                 # Create workflow from created jobs
                 root_job.addChild(job)
