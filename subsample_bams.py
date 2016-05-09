@@ -109,7 +109,7 @@ def subsample_bam(addresses, keyspace, auth, name, seed, fraction, iteration):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument('-e', '--seed', help="Seed number for reproducible sub-sampling")
+    parser.add_argument('-r', '--randseed', help="Seed number for reproducible sub-sampling")
     parser.add_argument('-n', '--number', help="Number of iterations per sample to perform", default=1)
     parser.add_argument('-s', '--samples_file', help="Input configuration file for samples")
     parser.add_argument('-c', '--configuration', help="Configuration file for various settings")
