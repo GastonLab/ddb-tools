@@ -51,7 +51,7 @@ def subsample_bam(job, addresses, keyspace, auth, name, samples, config, seed, f
                "{}".format(output))
 
     job.fileStore.logToMaster("Samtools Command: {}\n".format(samcommand))
-    pipeline.run_and_log_command(" ".join(samcommand), sublog)
+    pipeline.run_and_log_command(samcommand, sublog)
 
     job.fileStore.logToMaster("SamBamba Coverage Command: {}\n".format(command))
     pipeline.run_and_log_command(" ".join(command), logfile)
