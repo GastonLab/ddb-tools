@@ -23,7 +23,7 @@ def convert2pe(job, row):
                "-fq {}".format(outfile1),
                "-fq2 {}".format(outfile2))
 
-    sys.stdout.write("Running command {} and logging to {}\n".format(command, logfile))
+    job.fileStore.logToMaster("Running command {} and logging to {}\n".format(command, logfile))
     pipeline.run_and_log_command(command, logfile)
 
 
