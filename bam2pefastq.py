@@ -1,5 +1,5 @@
-#!/usr/bin/env python\
-import sys
+#!/usr/bin/env python
+
 import csv
 import argparse
 import argcomplete
