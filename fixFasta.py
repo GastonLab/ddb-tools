@@ -16,8 +16,8 @@ if __name__ == "__main__":
     with open(args.input, 'r') as alignfh:
         alignment = AlignIO.parse(alignfh, 'fasta')
 
-    sys.stdout.write("Writing FASTA to file {}\n".format(args.output))
-    with open(args.output, 'w') as outfh:
-        AlignIO.write(alignment, outfh, 'fasta')
+        sys.stdout.write("Writing FASTA to file {}\n".format(args.output))
+        with open(args.output, 'w') as outfh:
+            AlignIO.write(alignment, outfh, 'fasta')
 
     sys.stdout.write("Finished!\n")
