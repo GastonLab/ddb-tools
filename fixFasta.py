@@ -2,7 +2,7 @@
 
 import sys
 import argparse
-from Bio import AlignIO
+from Bio import SeqIO
 
 
 if __name__ == "__main__":
@@ -14,10 +14,10 @@ if __name__ == "__main__":
 
     sys.stdout.write("Reading input file {}\n".format(args.input))
     with open(args.input, 'r') as alignfh:
-        alignment = AlignIO.parse(alignfh, 'fasta')
+        alignment = SeqIO.parse(alignfh, 'fasta')
 
         sys.stdout.write("Writing FASTA to file {}\n".format(args.output))
         with open(args.output, 'w') as outfh:
-            AlignIO.write(alignment, outfh, 'fasta')
+            SeqIO.write(alignment, outfh, 'fasta')
 
     sys.stdout.write("Finished!\n")
