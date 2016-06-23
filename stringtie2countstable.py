@@ -21,3 +21,19 @@ if __name__ == "__main__":
 
     for sample in samples:
         gtf_file = HTSeq.GFF_Reader(sample['gtf'], end_included=True)
+        for feature in gtf_file:
+            if feature.type is 'mRNA':
+                transcript_counts[feature.attr['transcript_id']][sample]['FPKM'] = feature.attr['FPKM']
+                transcript_counts[feature.attr['transcript_id']][sample]['TPM'] = feature.attr['TPM']
+
+    with open(args.output, 'w') as output:
+        output.write("Transcript")
+        for sample in samples:
+            output.write("\t{sample} FPKM\t{sample} TPM".format(sample=sample))
+        output.write("\n")
+        for transcript in transcript_counts:
+            output.write("{}".format(transcript))
+            for sample in samples:
+                output.write("\t{}\t{}".format(transcript_counts[transcript][sample]['FPKM'],
+                                               transcript_counts[transcript][sample]['TPM']))
+            output.write("\n")
