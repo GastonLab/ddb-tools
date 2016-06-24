@@ -23,7 +23,7 @@ if __name__ == "__main__":
     transcript_counts = defaultdict(lambda: defaultdict(lambda: defaultdict(int)))
 
     for sample in samples:
-        gtf_file = HTSeq.GFF_Reader(sample['gtf'], end_included=True)
+        gtf_file = HTSeq.GFF_Reader(samples[sample]['gtf'], end_included=True)
         for feature in gtf_file:
             if feature.type is 'mRNA':
                 transcript_counts[feature.attr['transcript_id']][sample]['FPKM'] = feature.attr['FPKM']
