@@ -26,8 +26,8 @@ if __name__ == "__main__":
         sys.stderr.write("Processing sample {}\n".format(sample))
         gtf_file = HTSeq.GFF_Reader(samples[sample]['gtf'], end_included=True)
         for feature in gtf_file:
-            sys.stderr.write("Processing entry: {}\n".format(feature))
-            if feature.type is 'mRNA':
+            # sys.stderr.write("Processing entry: {}\n".format(feature))
+            if feature.type is 'transcript':
                 transcript_counts[feature.attr['transcript_id']][sample]['FPKM'] = feature.attr['FPKM']
                 transcript_counts[feature.attr['transcript_id']][sample]['TPM'] = feature.attr['TPM']
 
