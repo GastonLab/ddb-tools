@@ -15,7 +15,7 @@ if __name__ == "__main__":
 
     config = dict()
     sys.stdout.write("Parsing sample data\n")
-    samples = configuration.configure_samples(args.samples_file, config)
+    samples = configuration.configure_samples(args.input, config)
 
     transcript_counts = defaultdict(lambda: defaultdict(lambda: defaultdict(int)))
 
