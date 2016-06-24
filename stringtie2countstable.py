@@ -10,10 +10,13 @@ from ddb import configuration
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument('-i', '--input', help="Input config file for samples")
+    parser.add_argument('-c', '--configuration', help="Configuration file for various settings")
     parser.add_argument('-o', '--output', help="Output file name for CSV file")
     args = parser.parse_args()
 
-    config = dict()
+    sys.stdout.write("Parsing configuration data\n")
+    config = configuration.configure_runtime(args.configuration)
+
     sys.stdout.write("Parsing sample data\n")
     samples = configuration.configure_samples(args.input, config)
 
