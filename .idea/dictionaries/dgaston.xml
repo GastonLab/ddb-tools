@@ -2,6 +2,7 @@
   <dictionary name="dgaston">
     <words>
       <w>abformat</w>
+      <w>chrom</w>
       <w>csvfile</w>
       <w>infiles</w>
       <w>snps</w>
