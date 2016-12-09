@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 __author__ = 'dgaston'
 
 # This script takes the output of the HH analysis program and converts it to a BED-style format. Output also includes

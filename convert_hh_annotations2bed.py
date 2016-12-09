@@ -1,4 +1,4 @@
-__author__ = 'dgaston'
+#!/usr/bin/env python
 
 import csv
 import argparse

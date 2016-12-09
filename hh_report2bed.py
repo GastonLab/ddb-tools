@@ -1,4 +1,4 @@
-__author__ = 'dgaston'
+#!/usr/bin/env python
 
 # This script takes the output of the HH analysis program and converts it to a BED-style format. Output also includes
 # the size of the region in both cM and in Mega Bases
@@ -8,7 +8,7 @@ import argparse
 import argcomplete
 from itertools import izip
 
-import pybedtools
+# import pybedtools
 
 
 def pairs(iterable):
