@@ -28,7 +28,7 @@ if __name__ == "__main__":
 
     with open(args.infile, 'r') as infile:
         with open(args.outfile, 'w') as outfile:
-            reader = csv.reader(infile, dialect='tab-excel')
+            reader = csv.reader(infile, dialect='excel-tab')
             header = reader.next()
             for row in reader:
                 chrom, offset, ref, alt = hgvs.parse_hgvs_name(row[1], genome, get_transcript=get_transcript)
