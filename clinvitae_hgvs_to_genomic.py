@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+import csv
 import argparse
 import pyhgvs as hgvs
 import hgvs.utils as hgvs_utils
@@ -25,5 +26,10 @@ if __name__ == "__main__":
     def get_transcript(name):
         return transcripts.get(name)
 
-
-    chrom, offset, ref, alt = hgvs.parse_hgvs_name('NM_000352.3:c.215A>G', genome, get_transcript=get_transcript)
+    with open(args.infile, 'r') as infile:
+        with open(args.outfile, 'w') as outfile:
+            reader = csv.reader(infile, dialect='tab-excel')
+            header = reader.next()
+            for row in reader:
+                chrom, offset, ref, alt = hgvs.parse_hgvs_name(row[1], genome, get_transcript=get_transcript)
+                outfile.write("{}\t{}\t{}\t{}\n".format(chrom, offset, ref, alt))
