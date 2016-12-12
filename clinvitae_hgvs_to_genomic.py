@@ -31,5 +31,6 @@ if __name__ == "__main__":
             reader = csv.reader(infile, dialect='excel-tab')
             header = reader.next()
             for row in reader:
+                print row[1]
                 chrom, offset, ref, alt = hgvs.parse_hgvs_name(row[1], genome, get_transcript=get_transcript)
                 outfile.write("{}\t{}\t{}\t{}\n".format(chrom, offset, ref, alt))
