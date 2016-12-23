@@ -23,20 +23,24 @@ def run_fundi(job, root_name):
 
     logfile = "{}.fundi.log".format(root_name)
 
-    command = ["{}".format(config['vcfanno']['bin']),
-               "-p",
-               "{}".format(config['vcfanno']['num_cores']),
-               "--lua",
-               "{}".format(config['vcfanno']['lua']),
-               "{}".format(samples[name]['vcfanno_config']),
-               "{}".format(input_vcf),
-               ">",
-               "{}".format(output_vcf)]
+    command = ["perl ./FunDi.pl",
+               "-a",
+               "{}.aa_modified_nodash.phy".format(root_name),
+               "-o",
+               "{}.aa_modified_nodash_subtree".format(root_name),
+               "-m LG+F+G",
+               "-s",
+               "{}.nh.def".format(root_name),
+               "-P iqtree",
+               "-r 4",
+               "-t",
+               "{}.nh.newick".format(root_name),
+               "-N 22"]
 
-    job.fileStore.logToMaster("VCFAnno Command: {}\n".format(command))
+    job.fileStore.logToMaster("FunDi Command: {}\n".format(command))
     pipeline.run_and_log_command(" ".join(command), logfile)
 
-    return output_vcf
+    return logfile
 
 
 if __name__ == "__main__":
@@ -54,7 +58,7 @@ if __name__ == "__main__":
         reader.next()
         for row in reader:
             dataset = row[17]
-            sys.stderr.write("Running FunDi on dataset {}\n".format(dataset))
+            # sys.stderr.write("Running FunDi on dataset {}\n".format(dataset))
             fundi_job = Job.wrapJobFn(run_fundi, dataset,
                                       cores=22,
                                       memory="100G")
