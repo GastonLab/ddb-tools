@@ -43,7 +43,7 @@ def run_fundi(job, root_name):
     pipeline.run_and_log_command(" ".join(command), logfile)
 
     job.fileStore.logToMaster("Rename file Command: {}\n".format(command))
-    pipeline.run_and_log_command(" ".join(mv_fundi_log), logfile)
+    pipeline.run_and_log_command(mv_fundi_log, logfile)
 
     return logfile
 
