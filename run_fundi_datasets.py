@@ -58,7 +58,7 @@ if __name__ == "__main__":
     root_job = Job.wrapJobFn(pipeline.spawn_batch_jobs, cores=1)
     sys.stdout.write("Processing data from file: {}\n".format(args.infile))
     with open(args.infile, 'rU') as csvfile:
-        reader = csv.reader(args.infile)
+        reader = csv.reader(args.infile, dialect='excel-tab')
         reader.next()
         for row in reader:
             dataset = row[17]
