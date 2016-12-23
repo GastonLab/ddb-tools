@@ -61,7 +61,7 @@ if __name__ == "__main__":
         reader = csv.reader(args.infile, dialect='excel-tab')
         reader.next()
         for row in reader:
-            sys.stderr.write(row)
+            print row
             dataset = row[17]
             sys.stderr.write("Setting up FunDi run on dataset {}\n".format(dataset))
             fundi_job = Job.wrapJobFn(run_fundi, dataset,
