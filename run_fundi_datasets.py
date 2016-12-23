@@ -69,4 +69,5 @@ if __name__ == "__main__":
             root_job.addChild(fundi_job)
 
     # Start workflow execution
+    sys.stdout.write("Executing analyses\n")
     Job.Runner.startToil(root_job, args)
