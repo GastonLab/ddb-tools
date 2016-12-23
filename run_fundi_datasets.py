@@ -37,8 +37,13 @@ def run_fundi(job, root_name):
                "{}.nh.newick".format(root_name),
                "-N 22"]
 
+    mv_fundi_log = "mv FunDi.log {}_FunDi.log".format(root_name)
+
     job.fileStore.logToMaster("FunDi Command: {}\n".format(command))
     pipeline.run_and_log_command(" ".join(command), logfile)
+
+    job.fileStore.logToMaster("Rename file Command: {}\n".format(command))
+    pipeline.run_and_log_command(" ".join(mv_fundi_log), logfile)
 
     return logfile
 
