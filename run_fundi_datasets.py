@@ -59,7 +59,7 @@ if __name__ == "__main__":
     sys.stdout.write("Processing data from file: {}\n".format(args.infile))
     with open(args.infile, 'rU') as csvfile:
         reader = csv.reader(args.infile, dialect='excel-tab')
-        reader.next()
+        # reader.next()
         for row in reader:
             print row
             dataset = row[17]
