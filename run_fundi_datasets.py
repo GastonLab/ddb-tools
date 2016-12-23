@@ -62,7 +62,7 @@ if __name__ == "__main__":
         reader.next()
         for row in reader:
             dataset = row[17]
-            # sys.stderr.write("Running FunDi on dataset {}\n".format(dataset))
+            sys.stderr.write("Setting up FunDi run on dataset {}\n".format(dataset))
             fundi_job = Job.wrapJobFn(run_fundi, dataset,
                                       cores=22,
                                       memory="100G")
