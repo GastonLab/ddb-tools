@@ -51,7 +51,6 @@ def run_fundi(job, root_name):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument('-i', '--infile', help="Input configuration file for datasets")
-    parser.add_argument('-c', '--configuration', help="Configuration file for various settings")
     Job.Runner.addToilOptions(parser)
     args = parser.parse_args()
     args.logLevel = "INFO"
