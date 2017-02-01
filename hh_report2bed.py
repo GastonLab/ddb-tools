@@ -27,6 +27,7 @@ if __name__ == "__main__":
     sys.stdout.write("Reading Annotations file\n")
     annotations = pybedtools.BedTool(args.annotations)
 
+    sys.stdout.write("Processing through HH results\n")
     with open(args.outfile, 'w') as outfile:
         outfile.write("Chr\tStart\tEnd\tSize (Mbp)\tSize (CM)\tNum SNps\n")
         with open(args.infile, 'rU') as infile:
