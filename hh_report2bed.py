@@ -7,7 +7,6 @@ import sys
 import argparse
 import argcomplete
 from itertools import izip
-
 import pybedtools
 
 
@@ -25,6 +24,7 @@ if __name__ == "__main__":
     argcomplete.autocomplete(parser)
     args = parser.parse_args()
 
+    sys.stdout.write("Reading Annotations file\n")
     annotations = pybedtools.BedTool(args.annotations)
 
     with open(args.outfile, 'w') as outfile:
