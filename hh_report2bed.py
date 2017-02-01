@@ -18,8 +18,8 @@ def pairs(iterable):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument('-i', '--infile', help="Input AB format genotyping file [Required]")
-    parser.add_argument('-o', '--outfile', help="Output AB format genotyping file for HH program [Required]")
+    parser.add_argument('-i', '--infile', help="HH Output file")
+    parser.add_argument('-o', '--outfile', help="Output file name")
     parser.add_argument('-a', '--annotations', help="SNP annotations file for HH")
 
     argcomplete.autocomplete(parser)
