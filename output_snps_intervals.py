@@ -6,6 +6,8 @@ import argparse
 import pybedtools
 import argcomplete
 
+from collections import defaultdict
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument('-s', '--samples_file', help="Tab delimited file of sample IDs and their genotype files")
@@ -16,7 +18,8 @@ if __name__ == "__main__":
     argcomplete.autocomplete(parser)
     args = parser.parse_args()
 
-    samples = dict()
+    samples = defaultdict(dict())
+    sample_ids = list()
 
     sys.stdout.write("Reading Annotations file\n")
     annotations = pybedtools.BedTool(args.annotations)
@@ -24,7 +27,31 @@ if __name__ == "__main__":
     sys.stdout.write("Reading intervals file")
     intervals = pybedtools.BedTool(args.intervals)
 
+    sys.stdout.write("Getting file list for samples\n")
     with open(args.samples_file, 'r') as samples_file:
         reader = csv.reader(samples_file, dialect='excel-tab')
         for row in reader:
-            samples[row[0]] = row[1]
+            samples[row[0]]['file'] = row[1]
+            sample_ids.append(row[0])
+
+    sys.stdout.write("")
+    for sample in sample_ids:
+        with open(samples[sample]['file'], 'r') as sample_genotypes:
+            reader = csv.reader(sample_genotypes, dialect='excel-tab')
+            for row in reader:
+                samples[sample][row[0]] = row[1]
+
+    sys.stdout.write("")
+    for interval in intervals:
+        snps_in_interval = annotations.intersect(interval, u=True)
+        with open("{}-{}-{}.genotypes.txt".format(interval.chrom, interval.start, interval.stop), 'w') as genotypes_file:
+            genotypes_file.write("SNP ID\tChromosome\tPosition")
+            for sample in sample_ids:
+                genotypes_file.write("\t{}".format(sample))
+            genotypes_file.write("\n")
+
+            for snp in snps_in_interval:
+                genotypes_file.write("{}\t{}\t{}".format(snp.name, snp.chrom, snp.start))
+                for sample in sample_ids:
+                    genotypes_file.write("\t{}".format(samples[sample][snp.name]))
+                genotypes_file.write("\n")
