@@ -34,16 +34,19 @@ if __name__ == "__main__":
             samples[row[0]]['file'] = row[1]
             sample_ids.append(row[0])
 
-    sys.stdout.write("")
+    sys.stdout.write("Reading genotypes\n")
     for sample in sample_ids:
+        sys.stdout.write("Reading genotypes for sample {}\n".format(sample))
         with open(samples[sample]['file'], 'r') as sample_genotypes:
             reader = csv.reader(sample_genotypes, dialect='excel-tab')
             for row in reader:
                 samples[sample][row[0]] = row[1]
 
-    sys.stdout.write("")
+    sys.stdout.write("Processing intervals")
     for interval in intervals:
         snps_in_interval = annotations.intersect(interval, u=True)
+        sys.stdout.write("Outputting genotypes for interval {}:{}-{}"
+                         "\n".format(interval.chrom, interval.start, interval.stop))
         with open("{}-{}-{}.genotypes.txt".format(interval.chrom, interval.start, interval.stop), 'w') as genotypes_file:
             genotypes_file.write("SNP ID\tChromosome\tPosition")
             for sample in sample_ids:
