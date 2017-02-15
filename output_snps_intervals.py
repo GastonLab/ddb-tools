@@ -44,6 +44,8 @@ if __name__ == "__main__":
 
     sys.stdout.write("Processing intervals")
     for interval in intervals:
+        sys.stdout.write("Processing interval {}:{}-{}"
+                         "\n".format(interval.chrom, interval.start, interval.stop))
         snps_in_interval = annotations.intersect(interval, u=True)
         sys.stdout.write("Outputting genotypes for interval {}:{}-{}"
                          "\n".format(interval.chrom, interval.start, interval.stop))
