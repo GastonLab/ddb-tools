@@ -25,7 +25,7 @@ if __name__ == "__main__":
     annotations = pybedtools.BedTool(args.annotations)
 
     sys.stdout.write("Reading intervals file")
-    intervals = pybedtools.BedTool(args.intervals)
+    intervals = pybedtools.BedTool(args.intervals, stream=True)
 
     sys.stdout.write("Getting file list for samples\n")
     with open(args.samples_file, 'r') as samples_file:
@@ -42,7 +42,7 @@ if __name__ == "__main__":
             for row in reader:
                 samples[sample][row[0]] = row[1]
 
-    sys.stdout.write("Processing intervals")
+    sys.stdout.write("Processing intervals\n")
     for interval in intervals:
         sys.stdout.write("Processing interval {}:{}-{}"
                          "\n".format(interval.chrom, interval.start, interval.stop))
