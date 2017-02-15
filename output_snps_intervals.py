@@ -18,7 +18,7 @@ if __name__ == "__main__":
     argcomplete.autocomplete(parser)
     args = parser.parse_args()
 
-    samples = defaultdict(dict())
+    samples = defaultdict(dict)
     sample_ids = list()
 
     sys.stdout.write("Reading Annotations file\n")
