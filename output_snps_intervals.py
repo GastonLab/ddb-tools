@@ -25,7 +25,11 @@ if __name__ == "__main__":
     annotations = pybedtools.BedTool(args.annotations)
 
     sys.stdout.write("Reading intervals file")
-    intervals = pybedtools.BedTool(args.intervals, stream=True)
+    intervals = list()
+    with open(args.intervals, 'r') as intervals_file:
+        reader = csv.reader(intervals_file, dialect='excel-tab')
+        for row in reader:
+            intervals.append(row)
 
     sys.stdout.write("Getting file list for samples\n")
     with open(args.samples_file, 'r') as samples_file:
@@ -45,11 +49,12 @@ if __name__ == "__main__":
     sys.stdout.write("Processing intervals\n")
     for interval in intervals:
         sys.stdout.write("Processing interval {}:{}-{}"
-                         "\n".format(interval.chrom, interval.start, interval.stop))
+                         "\n".format(interval[0], interval[1], interval[2]))
+        interval = pybedtools.BedTool("{} {} {}".format(interval[0], interval[1], interval[2]), from_string=True)
         snps_in_interval = annotations.intersect(interval, u=True)
         sys.stdout.write("Outputting genotypes for interval {}:{}-{}"
-                         "\n".format(interval.chrom, interval.start, interval.stop))
-        with open("{}-{}-{}.genotypes.txt".format(interval.chrom, interval.start, interval.stop), 'w') as genotypes_file:
+                         "\n".format(interval[0], interval[1], interval[2]))
+        with open("{}-{}-{}.genotypes.txt".format(interval[0], interval[1], interval[2]), 'w') as genotypes_file:
             genotypes_file.write("SNP ID\tChromosome\tPosition")
             for sample in sample_ids:
                 genotypes_file.write("\t{}".format(sample))
