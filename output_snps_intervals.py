@@ -50,10 +50,9 @@ if __name__ == "__main__":
     for interval in intervals:
         sys.stdout.write("Processing interval {}:{}-{}"
                          "\n".format(interval[0], interval[1], interval[2]))
-        interval = pybedtools.BedTool("{} {} {}".format(interval[0], interval[1], interval[2]), from_string=True)
-        snps_in_interval = annotations.intersect(interval, u=True)
-        sys.stdout.write("Outputting genotypes for interval {}:{}-{}"
-                         "\n".format(interval[0], interval[1], interval[2]))
+        bed_interval = pybedtools.BedTool("{} {} {}".format(interval[0], interval[1], interval[2]), from_string=True)
+        snps_in_interval = annotations.intersect(bed_interval, u=True)
+        sys.stdout.write("Outputting genotypes for interval {}:{}-{}\n".format(interval[0], interval[1], interval[2]))
         with open("{}-{}-{}.genotypes.txt".format(interval[0], interval[1], interval[2]), 'w') as genotypes_file:
             genotypes_file.write("SNP ID\tChromosome\tPosition")
             for sample in sample_ids:
