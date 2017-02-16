@@ -62,5 +62,8 @@ if __name__ == "__main__":
             for snp in snps_in_interval:
                 genotypes_file.write("{}\t{}\t{}".format(snp.name, snp.chrom, snp.start))
                 for sample in sample_ids:
-                    genotypes_file.write("\t{}".format(samples[sample][snp.name]))
+                    try:
+                        genotypes_file.write("\t{}".format(samples[sample][snp.name]))
+                    except KeyError:
+                        genotypes_file.write("\t--")
                 genotypes_file.write("\n")
