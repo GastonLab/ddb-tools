@@ -16,12 +16,12 @@ if __name__ == "__main__":
 
     with open(args.input, 'r') as infile:
         for config_file in infile.readlines():
-            sys.stderr.write("Reading file: {}\n".format(config_file))
-            with open(config_file, 'r') as data_file:
+            sys.stderr.write("Reading file: {}\n".format(config_file.rstrip()))
+            with open(config_file.rstrip(), 'r') as data_file:
                 for line in data_file.readlines():
                     if line.startswith("report: "):
                         temp = line.split(" ")
-                        counts[temp[1]] += 1
+                        counts[temp[1].rstrip()] += 1
 
     sys.stderr.write("Type\tCount\n")
     for report_type in counts:
