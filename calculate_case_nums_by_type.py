@@ -15,10 +15,10 @@ if __name__ == "__main__":
     counts = defaultdict(int)
 
     with open(args.input, 'r') as infile:
-        for config_file in infile:
+        for config_file in infile.readlines():
             sys.stderr.write("Reading file: {}\n".format(config_file))
             with open(config_file, 'r') as data_file:
-                for line in data_file:
+                for line in data_file.readlines():
                     if line.startswith("report: "):
                         temp = line.split(" ")
                         counts[temp[1]] += 1
