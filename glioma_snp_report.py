@@ -108,4 +108,4 @@ if __name__ == "__main__":
 
     for sample in samples:
         sys.stdout.write("Processing sample {}\n".format(sample))
-        process_sample(parse_functions, sample, samples, config, snps, cores=1)
+        process_sample(parse_functions, sample, samples, config, snps)
