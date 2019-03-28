@@ -36,7 +36,7 @@ def process_sample(parse_functions, sample, samples, config, snp_list):
     written_snps = list()
     with open("{}.snp_freqs.txt".format(samples[sample]['library_name']),
               "w") as report:
-        report.write("SNP ID\tSomatic AF\tDepth\tCallers\n")
+        report.write("Chrom\tStart\tStop\tSNP ID\tSomatic AF\tDepth\tCallers\n")
         for variant in vcf:
             if variant.ID in snp_list:
                 written_snp_count += 1
