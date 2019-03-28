@@ -1,9 +1,6 @@
 #!/usr/bin/env python
 
-import re
 import sys
-import utils
-import cyvcf2
 import argparse
 
 from cyvcf2 import VCF
