@@ -64,11 +64,12 @@ def process_sample(job, parse_functions, sample, samples, config, snp_list):
                 if min_depth == 100000000:
                     min_depth = -1
 
-                report.write("{}\t{}\t{}\t{}\n".format(variant.ID, max_som_aaf,
-                                                       max_depth,
-                                                       ",".join(callers)))
+                report.write("{}\t{}\t{}\t{}\t{}\t{}\t{}"
+                             "\n".format(variant.CHROM, variant.start,
+                                         variant.end, variant.ID, max_som_aaf,
+                                         max_depth, ",".join(callers)))
     job.fileStore.logToMaster("Variant data for {} SNPS written for sample {}"
-                              "\n".format(sample, written_snps))
+                              "\n".format(written_snps, sample))
 
 
 if __name__ == "__main__":
