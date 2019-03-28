@@ -36,24 +36,16 @@ def process_sample(job, parse_functions, sample, samples, config, snp_list):
     sys.stdout.write("Parsing VCFAnno VCF\n")
     vcf = VCF(annotated_vcf)
 
-    sys.stdout.write("Parsing VCFAnno VCF with CyVCF2\n")
-    reader = cyvcf2.VCFReader(annotated_vcf)
-    desc = reader["ANN"]["Description"]
-    annotation_keys = [x.strip("\"'") for x in re.split("\s*\|\s*", desc.split(":", 1)[1].strip('" '))]
-
     sys.stdout.write("Processing individual variants\n")
     written_snps = 0
     with open("{}.snp_freqs.txt".format(samples[sample]['library_name']),
               "r") as report:
+        report.write("SNP ID\tSomatic AF\tDepth\tCallers\n")
         for variant in vcf:
             if variant.ID in snp_list:
                 written_snps += 1
                 # Parsing VCF and creating data structures for Cassandra model
                 callers = variant.INFO.get('CALLERS').split(',')
-                effects = utils.get_effects(variant, annotation_keys)
-                top_impact = utils.get_top_impact(effects)
-                population_freqs = utils.get_population_freqs(variant)
-                amplicon_data = utils.get_amplicon_data(variant)
 
                 key = (unicode("chr{}".format(variant.CHROM)), int(variant.start),
                        int(variant.end), unicode(variant.REF), unicode(variant.ALT[0]))
@@ -75,9 +67,9 @@ def process_sample(job, parse_functions, sample, samples, config, snp_list):
                 if min_depth == 100000000:
                     min_depth = -1
 
-                report.write("{}\t{}\t{}\n".format(variant.ID, max_som_aaf,
-                                                   max_depth,
-                                                   ",".join(callers)))
+                report.write("{}\t{}\t{}\t{}\n".format(variant.ID, max_som_aaf,
+                                                       max_depth,
+                                                       ",".join(callers)))
     job.fileStore.logToMaster("Variant data for {} SNPS written for sample {}"
                               "\n".format(sample, written_snps))
 
@@ -88,6 +80,8 @@ if __name__ == "__main__":
                         help="Input configuration file for samples")
     parser.add_argument('-c', '--configuration',
                         help="Configuration file for various settings")
+    parser.add_argument('-l', '--list',
+                        help="List file of SNPs to process")
 
     Job.Runner.addToilOptions(parser)
     args = parser.parse_args()
@@ -105,12 +99,16 @@ if __name__ == "__main__":
                        'scalpel': vcf_parsing.parse_scalpel_vcf_record,
                        'platypus': vcf_parsing.parse_platypus_vcf_record,
                        'pindel': vcf_parsing.parse_pindel_vcf_record}
+    snps = list()
+
+    with open(args.list, 'r') as fh:
+        snps = [current_snp.rstrip() for current_snp in fh.readlines()]
 
     root_job = Job.wrapJobFn(pipeline.spawn_batch_jobs, cores=1)
 
     for sample in samples:
         sample_job = Job.wrapJobFn(process_sample, parse_functions, sample,
-                                   samples, config, cores=1)
+                                   samples, config, snps, cores=1)
         root_job.addChild(sample_job)
 
     # Start workflow execution
