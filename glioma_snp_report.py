@@ -4,10 +4,8 @@ import sys
 import argparse
 
 from cyvcf2 import VCF
-from toil.job import Job
 from ddb import vcf_parsing
 from ddb import configuration
-from ddb_ngsflow import pipeline
 from collections import defaultdict
 
 
@@ -109,4 +107,5 @@ if __name__ == "__main__":
         snps = [current_snp.rstrip() for current_snp in fh.readlines()]
 
     for sample in samples:
+        sys.stdout.write("Processing sample {}\n".format(sample))
         process_sample(parse_functions, sample, samples, config, snps, cores=1)
