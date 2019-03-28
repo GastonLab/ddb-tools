@@ -34,13 +34,15 @@ def process_sample(job, parse_functions, sample, samples, config, snp_list):
     vcf = VCF(annotated_vcf)
 
     sys.stdout.write("Processing individual variants\n")
-    written_snps = 0
+    written_snp_count = 0
+    written_snps = list()
     with open("{}.snp_freqs.txt".format(samples[sample]['library_name']),
               "w") as report:
         report.write("SNP ID\tSomatic AF\tDepth\tCallers\n")
         for variant in vcf:
             if variant.ID in snp_list:
-                written_snps += 1
+                written_snp_count += 1
+                written_snps.append(variant.ID)
                 # Parsing VCF and creating data structures for Cassandra model
                 callers = variant.INFO.get('CALLERS').split(',')
 
@@ -68,8 +70,15 @@ def process_sample(job, parse_functions, sample, samples, config, snp_list):
                              "\n".format(variant.CHROM, variant.start,
                                          variant.end, variant.ID, max_som_aaf,
                                          max_depth, ",".join(callers)))
-    job.fileStore.logToMaster("Variant data for {} SNPS written for sample {}"
-                              "\n".format(written_snps, sample))
+        not_found = 0
+        for snp in snp_list:
+            if snp not in written_snps:
+                not_found += 1
+                report.write(".\t.\t.\t{}\t.\t.\t.\n".format(snp))
+    job.fileStore.logToMaster("Variant data for {} SNPS written for sample {}."
+                              " {} SNPs not found.\n".format(written_snp_count,
+                                                             sample,
+                                                             not_found))
 
 
 if __name__ == "__main__":
