@@ -9,7 +9,7 @@ from ddb import configuration
 from collections import defaultdict
 
 
-def process_sample(job, parse_functions, sample, samples, config, snp_list):
+def process_sample(parse_functions, sample, samples, config, snp_list):
     caller_records = defaultdict(lambda: dict())
 
     sys.stdout.write("Parsing Caller VCF Files\n")
