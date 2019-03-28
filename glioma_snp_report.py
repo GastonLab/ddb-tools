@@ -36,7 +36,7 @@ def process_sample(job, parse_functions, sample, samples, config, snp_list):
     sys.stdout.write("Processing individual variants\n")
     written_snps = 0
     with open("{}.snp_freqs.txt".format(samples[sample]['library_name']),
-              "r") as report:
+              "w") as report:
         report.write("SNP ID\tSomatic AF\tDepth\tCallers\n")
         for variant in vcf:
             if variant.ID in snp_list:
