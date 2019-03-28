@@ -75,10 +75,9 @@ def process_sample(job, parse_functions, sample, samples, config, snp_list):
             if snp not in written_snps:
                 not_found += 1
                 report.write(".\t.\t.\t{}\t.\t.\t.\n".format(snp))
-    job.fileStore.logToMaster("Variant data for {} SNPS written for sample {}."
-                              " {} SNPs not found.\n".format(written_snp_count,
-                                                             sample,
-                                                             not_found))
+    sys.stdout.write("Variant data for {} SNPS written for sample {}."
+                     " {} SNPs not found.\n".format(written_snp_count,
+                                                    sample, not_found))
 
 
 if __name__ == "__main__":
@@ -90,9 +89,7 @@ if __name__ == "__main__":
     parser.add_argument('-l', '--list',
                         help="List file of SNPs to process")
 
-    Job.Runner.addToilOptions(parser)
     args = parser.parse_args()
-    args.logLevel = "INFO"
 
     sys.stdout.write("Parsing configuration data\n")
     config = configuration.configure_runtime(args.configuration)
@@ -111,12 +108,5 @@ if __name__ == "__main__":
     with open(args.list, 'r') as fh:
         snps = [current_snp.rstrip() for current_snp in fh.readlines()]
 
-    root_job = Job.wrapJobFn(pipeline.spawn_batch_jobs, cores=1)
-
     for sample in samples:
-        sample_job = Job.wrapJobFn(process_sample, parse_functions, sample,
-                                   samples, config, snps, cores=1)
-        root_job.addChild(sample_job)
-
-    # Start workflow execution
-    Job.Runner.startToil(root_job, args)
+        process_sample(parse_functions, sample, samples, config, snps, cores=1)
