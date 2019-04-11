@@ -16,8 +16,8 @@ def write_data():
 
 
 def process_sample(parse_functions, sample, samples, config, snp_list):
-    caller_records = defaultdict(lambda: dict())
-    snp_data = defaultdict(lambda: dict())
+    caller_records = defaultdict(lambda: defaultdict())
+    snp_data = defaultdict(lambda: defaultdict())
 
     sys.stdout.write("Parsing Caller VCF Files\n")
     vcf_parsing.parse_vcf("{}.mutect.normalized.vcf.gz".format(sample),
@@ -94,7 +94,7 @@ if __name__ == "__main__":
                        'platypus': vcf_parsing.parse_platypus_vcf_record,
                        'pindel': vcf_parsing.parse_pindel_vcf_record}
     snps = list()
-    sample_snp_data = defaultdict(lambda: defaultdict(dict))
+    sample_snp_data = defaultdict(lambda: defaultdict(defaultdict))
 
     with open(args.list, 'r') as fh:
         snps = [current_snp.rstrip() for current_snp in fh.readlines()]
@@ -103,7 +103,6 @@ if __name__ == "__main__":
         sys.stdout.write("Processing sample {}\n".format(sample))
         sample_snp_data[sample] = process_sample(parse_functions, sample,
                                                  samples, config, snps)
-        print sample_snp_data[sample]
 
     sys.stdout.write("Writing out data\n")
     with open("glioma_snp_data.txt", 'wb') as out:
