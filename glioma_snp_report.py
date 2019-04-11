@@ -94,7 +94,7 @@ if __name__ == "__main__":
                        'platypus': vcf_parsing.parse_platypus_vcf_record,
                        'pindel': vcf_parsing.parse_pindel_vcf_record}
     snps = list()
-    sample_snp_data = defaultdict(lambda: dict())
+    sample_snp_data = defaultdict(lambda: defaultdict(dict))
 
     with open(args.list, 'r') as fh:
         snps = [current_snp.rstrip() for current_snp in fh.readlines()]
@@ -113,7 +113,6 @@ if __name__ == "__main__":
         for snp in snps:
             out.write("{}".format(snp))
             for sample in samples:
-                snp_data = sample_snp_data[sample]
-                out.write("\t{}\t{}".format(snp_data[snp]['freq'],
-                                            snp_data[snp]['depth']))
+                out.write("\t{}\t{}".format(sample_snp_data[sample][snp]['freq'],
+                                            sample_snp_data[sample][snp]['depth']))
             out.write("\n")
