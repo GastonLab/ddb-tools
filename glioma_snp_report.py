@@ -103,6 +103,7 @@ if __name__ == "__main__":
         sys.stdout.write("Processing sample {}\n".format(sample))
         sample_snp_data[sample] = process_sample(parse_functions, sample,
                                                  samples, config, snps)
+        print sample_snp_data[sample]
 
     sys.stdout.write("Writing out data\n")
     with open("glioma_snp_data.txt", 'wb') as out:
