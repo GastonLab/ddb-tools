@@ -17,7 +17,7 @@ def write_data():
 
 def process_sample(parse_functions, sample, samples, config, snp_list):
     caller_records = defaultdict(lambda: defaultdict())
-    snp_data = defaultdict(lambda: defaultdict)
+    snp_data = defaultdict(lambda: defaultdict())
 
     sys.stdout.write("Parsing Caller VCF Files\n")
     vcf_parsing.parse_vcf("{}.mutect.normalized.vcf.gz".format(sample),
