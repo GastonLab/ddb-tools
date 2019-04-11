@@ -17,7 +17,7 @@ def write_data():
 
 def process_sample(parse_functions, sample, samples, config, snp_list):
     caller_records = defaultdict(lambda: defaultdict())
-    snp_data = defaultdict(lambda: defaultdict())
+    snp_data = defaultdict(dict())
 
     sys.stdout.write("Parsing Caller VCF Files\n")
     vcf_parsing.parse_vcf("{}.mutect.normalized.vcf.gz".format(sample),
@@ -94,7 +94,7 @@ if __name__ == "__main__":
                        'platypus': vcf_parsing.parse_platypus_vcf_record,
                        'pindel': vcf_parsing.parse_pindel_vcf_record}
     snps = list()
-    sample_snp_data = defaultdict(lambda: defaultdict(defaultdict))
+    sample_snp_data = defaultdict(lambda: defaultdict())
 
     with open(args.list, 'r') as fh:
         snps = [current_snp.rstrip() for current_snp in fh.readlines()]
@@ -114,7 +114,10 @@ if __name__ == "__main__":
             out.write("{}".format(snp))
             print snp
             for sample in samples:
-                print sample_snp_data[sample]
-                out.write("\t{}\t{}".format(sample_snp_data[sample][snp]['freq'] or "-",
-                                            sample_snp_data[sample][snp]['depth']))
+                # print sample_snp_data[sample]
+                if sample_snp_data[sample][snp]:
+                    out.write("\t{}\t{}".format(sample_snp_data[sample][snp]['freq'],
+                                                sample_snp_data[sample][snp]['depth']))
+                else:
+                    out.write("\t-\t-")
             out.write("\n")
