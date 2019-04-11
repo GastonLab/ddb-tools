@@ -113,6 +113,7 @@ if __name__ == "__main__":
         for snp in snps:
             out.write("{}".format(snp))
             for sample in samples:
+                print sample_snp_data[sample][snp]
                 out.write("\t{}\t{}".format(sample_snp_data[sample][snp]['freq'] or "-",
                                             sample_snp_data[sample][snp]['depth']))
             out.write("\n")
