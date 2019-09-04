@@ -66,6 +66,8 @@ def process_sample(parse_functions, sample, samples, config, snp_list):
 
             snp_data[variant.ID]['freq'] = max_som_aaf
             snp_data[variant.ID]['depth'] = max_depth
+            snp_data[variant.ID]['chr'] = variant.CHROM
+            snp_data[variant.ID]['pos'] = variant.start
 
     return snp_data
 
@@ -106,7 +108,7 @@ if __name__ == "__main__":
 
     sys.stdout.write("Writing out data\n")
     with open("glioma_snp_data.txt", 'wb') as out:
-        out.write("SNP")
+        out.write("SNP\tChr\tPos")
         for sample in samples:
             out.write("\t{} - AAF\t{} - Depth".format(sample, sample))
         out.write("\n")

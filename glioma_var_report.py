@@ -132,7 +132,7 @@ def process_sample(job, parse_functions, sample, samples, config):
                     vardict=caller_variant_data_dicts['vardict'] or dict(),
                     manta=caller_variant_data_dicts['manta'] or dict()
                     )
-
+            # End try
     with open("{}.sample_variant_add.log".format(samples[sample]['library_name']), "a") as err:
         err.write("Sample: {}\t Library: {}\n".format(samples[sample]['sample_name'],
                                                       samples[sample]['library_name'], ))
