@@ -3,21 +3,29 @@
 import os
 import sys
 import fnmatch
+import argparse
 
 from ddb import configuration
 from collections import defaultdict
 
 if __name__ == "__main__":
     type = "colorectal"
-    type_cases = defaultdict(defaultdict(list))
-    counts = defaultdict(int)
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-c', '--configuration',
+                        help="Configuration file for various settings")
+    args = parser.parse_args()
+
+    sys.stdout.write("Parsing configuration data\n")
+    config = configuration.configure_runtime(args.configuration)
+
+    # type_cases = defaultdict(defaultdict(list))
+    # counts = defaultdict(int)
     for root, dirs, files in os.walk("."):
-        for config_file in fnmatch.filter(files, "1*_M0373?.config"):
+        for samples_file in fnmatch.filter(files, "1*_M0373?.config"):
             sys.stderr.write("Reading file: {}\n".format(os.path.join(root, config_file)))
+
             sys.stdout.write("Parsing sample data\n")
-            libraries = configuration.configure_samples(args.samples_file,
-                                                        os.path.join(root,
-                                                                     config_file))
+            libraries = configuration.configure_samples(os.path.join(root, samples_file), config)
             samples = configuration.merge_library_configs_samples(libraries)
             for sample in samples:
                 if sample['report'].startswith(type):
