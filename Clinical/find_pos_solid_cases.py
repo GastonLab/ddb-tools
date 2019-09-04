@@ -22,7 +22,7 @@ if __name__ == "__main__":
     # counts = defaultdict(int)
     for root, dirs, files in os.walk("."):
         for samples_file in fnmatch.filter(files, "1*_M0373?.config"):
-            sys.stderr.write("Reading file: {}\n".format(os.path.join(root, config_file)))
+            sys.stderr.write("Reading file: {}\n".format(os.path.join(root, samples_file)))
 
             sys.stdout.write("Parsing sample data\n")
             libraries = configuration.configure_samples(os.path.join(root, samples_file), config)
@@ -31,6 +31,6 @@ if __name__ == "__main__":
                 if sample['report'].startswith(type):
                     print "Colorectal case found: {}\n".format(sample)
 
-    sys.stderr.write("Type\tCount\n")
-    for report_type in counts:
-        sys.stdout.write("{}\t{}\n".format(report_type, counts[report_type]))
+    # sys.stderr.write("Type\tCount\n")
+    # for report_type in counts:
+    #     sys.stdout.write("{}\t{}\n".format(report_type, counts[report_type]))
