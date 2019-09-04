@@ -28,8 +28,9 @@ if __name__ == "__main__":
             libraries = configuration.configure_samples(os.path.join(root, samples_file), config)
             samples = configuration.merge_library_configs_samples(libraries)
             for sample in samples:
-                if sample['report'].startswith(type):
-                    print "Colorectal case found: {}\n".format(sample)
+                for library in samples[sample]:
+                    if samples[sample][library]['report'].startswith(type):
+                        print "Colorectal case found: {}\n".format(sample)
 
     # sys.stderr.write("Type\tCount\n")
     # for report_type in counts:
