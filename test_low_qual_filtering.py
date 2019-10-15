@@ -40,4 +40,3 @@ if __name__ == "__main__":
             writer.write_record(variant)
 
     writer.close()
-    vcf.close()
