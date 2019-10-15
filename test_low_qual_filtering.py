@@ -34,7 +34,7 @@ if __name__ == "__main__":
     for variant in vcf:
         pass_filter = True
         var_info = parse_functions[args.caller](variant)
-        if int(var_info['Alt_Depth']) < 5:
+        if float(var_info['Alt_Depth']) < 5.0:
             pass_filter = False
         if pass_filter:
             writer.write_record(variant)
