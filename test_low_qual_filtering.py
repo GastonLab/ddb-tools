@@ -13,7 +13,7 @@ from cyvcf2 import Writer
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument('-s', '--sample_name',
+    parser.add_argument('-s', '--sample',
                         help="Sample name")
     parser.add_argument('-c', '--caller',
                         help="Name of caller to use")
