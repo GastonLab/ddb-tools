@@ -1,11 +1,8 @@
 #!/usr/bin/env python
 
-import os
 import sys
-import cyvcf2
 import argparse
 
-from ddb_ngsflow import pipeline
 from ddb import vcf_parsing
 from cyvcf2 import VCF
 from cyvcf2 import Writer
