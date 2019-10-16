@@ -34,7 +34,7 @@ if __name__ == "__main__":
     sys.stdout.write("Opening output file\n")
     writer = Writer(output_vcf, vcf)
 
-    sys.stdout.write("Iterating through input VCF")
+    sys.stdout.write("Iterating through input VCF\n")
     for variant in vcf:
         pass_filter = True
         var_info = parse_functions[args.caller](variant)
