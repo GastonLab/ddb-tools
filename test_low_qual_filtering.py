@@ -10,17 +10,16 @@ from cyvcf2 import Writer
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument('-s', '--sample',
-                        help="Sample name")
+    parser.add_argument('-i', '--input',
+                        help="Input file")
     parser.add_argument('-c', '--caller',
                         help="Name of caller to use")
     args = parser.parse_args()
     args.logLevel = "INFO"
 
-    input_vcf = "{}.{}.rehead.vcf.gz".format(args.sample, args.caller)
     output_vcf = "{}.{}.low_qual_filtered.vcf".format(args.sample, args.caller)
 
-    sys.stdout.write("Filtering VCF {}\n".format(input_vcf))
+    sys.stdout.write("Filtering VCF {}\n".format(args.input))
     parse_functions = {'mutect': vcf_parsing.parse_mutect_vcf_record,
                        'freebayes': vcf_parsing.parse_freebayes_vcf_record,
                        'vardict': vcf_parsing.parse_vardict_vcf_record,
@@ -28,8 +27,8 @@ if __name__ == "__main__":
                        'platypus': vcf_parsing.parse_platypus_vcf_record,
                        'pindel': vcf_parsing.parse_pindel_vcf_record}
 
-    vcf = VCF(input_vcf)
-    writer = Writer(output_vcf, input_vcf)
+    vcf = VCF(args.input)
+    writer = Writer(output_vcf, args.input)
 
     for variant in vcf:
         pass_filter = True
