@@ -29,9 +29,12 @@ if __name__ == "__main__":
                        'platypus': vcf_parsing.parse_platypus_vcf_record,
                        'pindel': vcf_parsing.parse_pindel_vcf_record}
 
+    sys.stdout.write("Opening input file\n")
     vcf = VCF(args.input)
+    sys.stdout.write("Opening output file\n")
     writer = Writer(output_vcf, args.input)
 
+    sys.stdout.write("Iterating through input VCF")
     for variant in vcf:
         pass_filter = True
         var_info = parse_functions[args.caller](variant)
