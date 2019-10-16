@@ -17,7 +17,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
     args.logLevel = "INFO"
 
-    input_vcf = "{}.{}.normalized.vcf.gz".format(args.sample, args.caller)
+    input_vcf = "{}.{}.rehead.vcf.gz".format(args.sample, args.caller)
     output_vcf = "{}.{}.low_qual_filtered.vcf".format(args.sample, args.caller)
 
     sys.stdout.write("Filtering VCF {}\n".format(input_vcf))
@@ -29,7 +29,7 @@ if __name__ == "__main__":
                        'pindel': vcf_parsing.parse_pindel_vcf_record}
 
     vcf = VCF(input_vcf)
-    writer = Writer(output_vcf, vcf)
+    writer = Writer(output_vcf, input_vcf)
 
     for variant in vcf:
         pass_filter = True
