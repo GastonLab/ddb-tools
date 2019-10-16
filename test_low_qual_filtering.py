@@ -32,7 +32,7 @@ if __name__ == "__main__":
     sys.stdout.write("Opening input file\n")
     vcf = VCF(args.input)
     sys.stdout.write("Opening output file\n")
-    writer = Writer(output_vcf, args.input)
+    writer = Writer(output_vcf, vcf)
 
     sys.stdout.write("Iterating through input VCF")
     for variant in vcf:
